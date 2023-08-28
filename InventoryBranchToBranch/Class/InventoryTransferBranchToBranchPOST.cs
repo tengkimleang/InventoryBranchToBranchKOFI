@@ -20,6 +20,6 @@ namespace InventoryBranchToBranch.Class
         public string GoodIssueRef { get; set; }
         public int GoodIssueBranchID { get; set; }
         public string GoodIssueWhsCode { get; set; }
-        public List<ItemLine> ListItemList { get; set; }
+        public List<GetItemListFromExcel> ListItemList { get; set; }
     }
 }

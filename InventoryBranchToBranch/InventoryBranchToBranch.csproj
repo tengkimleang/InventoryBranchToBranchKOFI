@@ -13,6 +13,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -25,7 +26,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -92,11 +92,13 @@
     <None Include="Form1.b1f">
       <FormCategory>UserForm</FormCategory>
     </None>
+    <Compile Include="Class\GetItemListFromExcel.cs" />
     <Compile Include="Class\Item.cs" />
     <Compile Include="Class\ItemBatches.cs" />
     <Compile Include="Class\InventoryTransferBranchToBranchPOST.cs" />
     <Compile Include="Class\ItemLine.cs" />
     <Compile Include="Class\ItemSerials.cs" />
+    <Compile Include="Class\ResponseData.cs" />
     <Compile Include="Class\ResponseInventoryTransferBranchToBranch.cs" />
     <Compile Include="Connection\CallStoreProcedure.cs" />
     <Compile Include="Connection\ConnectionString.cs" />
@@ -106,75 +108,76 @@
     <Compile Include="Form1.b1f.cs">
       <DependentUpon>Form1.b1f</DependentUpon>
     </Compile>
-    <Compile Include="Form2.cs">
+    <Compile Include="Form\Form2.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form2.Designer.cs">
+    <Compile Include="Form\Form2.Designer.cs">
       <DependentUpon>Form2.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmItemNone.cs">
+    <Compile Include="Form\frmItemNone.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmItemNone.Designer.cs">
+    <Compile Include="Form\frmItemNone.Designer.cs">
       <DependentUpon>frmItemNone.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmLoading.cs">
+    <Compile Include="Form\frmLoading.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmLoading.Designer.cs">
+    <Compile Include="Form\frmLoading.Designer.cs">
       <DependentUpon>frmLoading.cs</DependentUpon>
     </Compile>
-    <Compile Include="frmSelectBatch.cs">
+    <Compile Include="Form\frmSelectBatch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSelectBatch.Designer.cs">
+    <Compile Include="Form\frmSelectBatch.Designer.cs">
       <DependentUpon>frmSelectBatch.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmSelectItem.cs">
+    <Compile Include="Form\FrmSelectItem.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmSelectItem.Designer.cs">
+    <Compile Include="Form\FrmSelectItem.Designer.cs">
       <DependentUpon>FrmSelectItem.cs</DependentUpon>
     </Compile>
-    <Compile Include="FrmSelectSerial.cs">
+    <Compile Include="Form\FrmSelectSerial.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FrmSelectSerial.Designer.cs">
+    <Compile Include="Form\FrmSelectSerial.Designer.cs">
       <DependentUpon>FrmSelectSerial.cs</DependentUpon>
     </Compile>
     <Compile Include="Implement\InventoryTransferBranchToBranchImplement.cs" />
     <Compile Include="Interface\IInventoryTransferBranchToBranch.cs" />
-    <Compile Include="InventoryBranchToBranch.cs">
+    <Compile Include="Form\InventoryBranchToBranch.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InventoryBranchToBranch.Designer.cs">
+    <Compile Include="Form\InventoryBranchToBranch.Designer.cs">
       <DependentUpon>InventoryBranchToBranch.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lib\LoadExcelToDataTable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Menu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Form2.resx">
+    <EmbeddedResource Include="Form\Form2.resx">
       <DependentUpon>Form2.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmItemNone.resx">
+    <EmbeddedResource Include="Form\frmItemNone.resx">
       <DependentUpon>frmItemNone.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmLoading.resx">
+    <EmbeddedResource Include="Form\frmLoading.resx">
       <DependentUpon>frmLoading.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="frmSelectBatch.resx">
+    <EmbeddedResource Include="Form\frmSelectBatch.resx">
       <DependentUpon>frmSelectBatch.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmSelectItem.resx">
+    <EmbeddedResource Include="Form\FrmSelectItem.resx">
       <DependentUpon>FrmSelectItem.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FrmSelectSerial.resx">
+    <EmbeddedResource Include="Form\FrmSelectSerial.resx">
       <DependentUpon>FrmSelectSerial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InventoryBranchToBranch.resx">
+    <EmbeddedResource Include="Form\InventoryBranchToBranch.resx">
       <DependentUpon>InventoryBranchToBranch.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
@@ -189,6 +192,9 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Script\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

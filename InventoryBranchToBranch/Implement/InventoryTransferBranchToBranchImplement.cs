@@ -39,29 +39,24 @@ namespace InventoryBranchToBranch.Implement
                     foreach (var l in data.ListItemList)
                     {
                         oGoodIssue.Lines.ItemCode = l.ItemCode;
-                        oGoodIssue.Lines.Quantity = l.Qty;
-                        oGoodIssue.Lines.UnitPrice = l.Price;
+                        oGoodIssue.Lines.Quantity = l.Quantity;
+                        oGoodIssue.Lines.UnitPrice = l.UnitPrice;
                         oGoodIssue.Lines.WarehouseCode = data.GoodIssueWhsCode;
+                        oGoodIssue.Lines.AccountCode = l.AccountCode;
                         //oGoodReceiptPO.Lines.DiscountPercent = l.Discount;
-                        //oGoodIssue.Lines.WarehouseCode = l.WarehouseCode;
                         //oGoodReceiptPO.Lines.UoMEntry = Convert.ToInt32(l.UomName);
-                        
-                        if (l.listSerial != null && l.listSerial.Count()>0)
-                            foreach (var serial in l.listSerial)
-                            {
-                                oGoodIssue.Lines.SerialNumbers.Quantity = serial.Qty;
-                                oGoodIssue.Lines.SerialNumbers.InternalSerialNumber = serial.Serial;
-                                //oGoodIssue.Lines.SerialNumbers.BaseLineNumber = 1;
-                                oGoodIssue.Lines.SerialNumbers.Add();
-                            }
-                        else if (l.listBatches != null && l.listBatches.Count() > 0)
-                            foreach (var batch in l.listBatches)
-                            {
-                                oGoodIssue.Lines.BatchNumbers.BatchNumber = batch.BatcheCode;
-                                oGoodIssue.Lines.BatchNumbers.Quantity = batch.Qty;
-                                oGoodIssue.Lines.BatchNumbers.ExpiryDate = Convert.ToDateTime(batch.ExpDate);
-                                oGoodIssue.Lines.BatchNumbers.Add();
-                            }
+                        if (l.ItemType == "S") 
+                        {
+                            oGoodIssue.Lines.SerialNumbers.Quantity = l.Quantity;
+                            oGoodIssue.Lines.SerialNumbers.InternalSerialNumber = l.SerialBatch;
+                            oGoodIssue.Lines.SerialNumbers.Add();
+                        }
+                        else if (l.ItemType == "B")
+                        {
+                            oGoodIssue.Lines.BatchNumbers.BatchNumber = l.SerialBatch;
+                            oGoodIssue.Lines.BatchNumbers.Quantity = l.Quantity;
+                            oGoodIssue.Lines.BatchNumbers.Add();
+                        }
                         oGoodIssue.Lines.Add();
                     }
                     oGoodReceipt = (Documents)oCompany.GetBusinessObject(BoObjectTypes.oInventoryGenEntry);
@@ -74,32 +69,26 @@ namespace InventoryBranchToBranch.Implement
                     foreach (var l in data.ListItemList)
                     {
                         oGoodReceipt.Lines.ItemCode = l.ItemCode;
-                        oGoodReceipt.Lines.Quantity = l.Qty;
-                        oGoodReceipt.Lines.UnitPrice = l.Price;
-                        oGoodReceipt.Lines.WarehouseCode = data.GoodReceiptWhsCode;//
-                        //oGoodReceiptPO.Lines.DiscountPercent = l.Discount;
-                        //oGoodIssue.Lines.WarehouseCode = l.WarehouseCode;
-                        //oGoodReceiptPO.Lines.UoMEntry = Convert.ToInt32(l.UomName);
-
-                        if (l.listSerial != null && l.listSerial.Count() > 0)
-                            foreach (var serial in l.listSerial)
-                            {
-                                oGoodReceipt.Lines.SerialNumbers.Quantity = serial.Qty;
-                                oGoodReceipt.Lines.SerialNumbers.InternalSerialNumber = serial.Serial;
-                                //oGoodIssue.Lines.SerialNumbers.BaseLineNumber = 1;
-                                oGoodReceipt.Lines.SerialNumbers.Add();
-                            }
-                        else if (l.listBatches != null && l.listBatches.Count() > 0)
-                            foreach (var batch in l.listBatches)
-                            {
-                                oGoodReceipt.Lines.BatchNumbers.BatchNumber = batch.BatcheCode;
-                                oGoodReceipt.Lines.BatchNumbers.Quantity = batch.Qty;
-                                oGoodReceipt.Lines.BatchNumbers.ExpiryDate = Convert.ToDateTime(batch.ExpDate);
-                                oGoodReceipt.Lines.BatchNumbers.Add();
-                            }
+                        oGoodReceipt.Lines.Quantity = l.Quantity;
+                        oGoodReceipt.Lines.UnitPrice = l.UnitPrice;
+                        oGoodReceipt.Lines.WarehouseCode = data.GoodReceiptWhsCode;
+                        oGoodReceipt.Lines.AccountCode = l.AccountCode;
+                        if (l.ItemType == "S")
+                        {
+                            oGoodReceipt.Lines.SerialNumbers.Quantity = l.Quantity;
+                            oGoodReceipt.Lines.SerialNumbers.InternalSerialNumber = l.SerialBatch;
+                            oGoodReceipt.Lines.SerialNumbers.Add();
+                        }
+                        else if (l.ItemType == "B")
+                        {
+                            oGoodReceipt.Lines.BatchNumbers.BatchNumber = l.SerialBatch;
+                            oGoodReceipt.Lines.BatchNumbers.Quantity = l.Quantity;
+                            oGoodReceipt.Lines.BatchNumbers.Add();
+                        }
                         oGoodReceipt.Lines.Add();
                     }
                     RetvalGoodIssue = oGoodIssue.Add();
+                    var docEntryGoodIssue = oCompany.GetNewObjectKey();
                     if (RetvalGoodIssue != 0)
                     {
                         oCompany.GetLastError(out ErrCode, out ErrMsg);
@@ -112,6 +101,7 @@ namespace InventoryBranchToBranch.Implement
                         });
                     }
                     RetvalGoodReceipt = oGoodReceipt.Add();
+                    var docEntryGoodReceipt = oCompany.GetNewObjectKey();
                     if (RetvalGoodReceipt != 0)
                     {
                         oCompany.GetLastError(out ErrCode, out ErrMsg);
@@ -123,8 +113,9 @@ namespace InventoryBranchToBranch.Implement
                             DocEntry = null
                         });
                     }
-
                     oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
+                    RetiveData rd = new RetiveData();
+                    rd.GetData("UpdateDocEntryToGoodIReceptAndUpdateDocEntryToGoodIssue", docEntryGoodReceipt, docEntryGoodIssue, "", "", "");
                     return Task.FromResult(new ResponseInventoryTransferBranchToBranch
                     {
                         ErrorCode = 0,

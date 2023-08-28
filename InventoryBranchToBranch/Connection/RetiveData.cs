@@ -14,9 +14,10 @@ namespace InventoryBranchToBranch.Connection
         {
             SqlDataAdapter sqlDataAdapter = new SqlDataAdapter();
             DataTable dataTable = new DataTable();
-            LoginSql loginSql = new LoginSql(LoginSql.Type.SAP);
+            //LoginSql loginSql = new LoginSql(LoginSql.Type.SAP);
+            var cmd = "EXEC KOFI_ADDON_BRANCH_TO_BRANCH '" + Type + "','" + par1 + "','" + par2 + "','" + par3 + "','" + par4 + "','" + par5 + "'";
             sqlDataAdapter = new SqlDataAdapter("EXEC KOFI_ADDON_BRANCH_TO_BRANCH '" + Type + "','" + par1 + "','" + par2 + "','" + par3 + "','" + par4 + "','" + par5 + "'"
-                , new SqlConnection("Data Source=.;Initial Catalog=PRD_KNG_MACHINERY_BKK_5-17-22;User Id=sa;Password=SAPB1Admin"));
+                , new SqlConnection("Data Source=.;Initial Catalog=DB_KOFI_API_TESTING_06-09-2021;User Id=sa;Password=SAPB1Admin"));
             try
             {
                 sqlDataAdapter.Fill(dataTable);
