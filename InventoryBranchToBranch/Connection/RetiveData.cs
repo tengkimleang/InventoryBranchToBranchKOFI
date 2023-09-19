@@ -17,7 +17,7 @@ namespace InventoryBranchToBranch.Connection
             //LoginSql loginSql = new LoginSql(LoginSql.Type.SAP);
             var cmd = "EXEC KOFI_ADDON_BRANCH_TO_BRANCH '" + Type + "','" + par1 + "','" + par2 + "','" + par3 + "','" + par4 + "','" + par5 + "'";
             sqlDataAdapter = new SqlDataAdapter("EXEC KOFI_ADDON_BRANCH_TO_BRANCH '" + Type + "','" + par1 + "','" + par2 + "','" + par3 + "','" + par4 + "','" + par5 + "'"
-                , new SqlConnection("Data Source=.;Initial Catalog=DB_KOFI_API_TESTING_06-09-2021;User Id=sa;Password=SAPB1Admin"));
+                , new SqlConnection(ConnectionString.SqlConnectionSap));
             try
             {
                 sqlDataAdapter.Fill(dataTable);

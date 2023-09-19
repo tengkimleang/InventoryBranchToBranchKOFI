@@ -31,13 +31,13 @@ namespace InventoryBranchToBranch
             cboSeries.DisplayMember = "SeriesName";
             cboSeries.ValueMember = "Series";
             cboSeries.DataSource = dt;
-            txtMaxNumberGoodIssue.Text = dt.Rows[0]["DocNum"].ToString();
+            txtMaxNumberGoodIssue.Text = "-----";//dt.Rows[0]["DocNum"].ToString();
             dt = new DataTable();
             dt = rd.GetData("SERIES", "59", "", "", "", "");
             cboSeriesGoodReceipt.DisplayMember = "SeriesName";
             cboSeriesGoodReceipt.ValueMember = "Series";
             cboSeriesGoodReceipt.DataSource = dt;
-            txtDocNumGoodReceipt.Text = dt.Rows[0]["DocNum"].ToString();
+            txtDocNumGoodReceipt.Text = "----";//dt.Rows[0]["DocNum"].ToString();
             txtDocNumGoodReceipt.Enabled = false;
             dt = new DataTable();
             dt = rd.GetData("PriceList", "", "", "", "", "");
@@ -221,7 +221,7 @@ namespace InventoryBranchToBranch
             Thread t = new Thread((ThreadStart)(() => {
                 OpenFileDialog saveFileDialog1 = new OpenFileDialog();
 
-                saveFileDialog1.Filter = "Excel Files (*.xlsx)|*.xlsx";
+                saveFileDialog1.Filter = "Excel Files (*.xls)|*.xls";//x
                 saveFileDialog1.FilterIndex = 2;
                 saveFileDialog1.RestoreDirectory = true;
 

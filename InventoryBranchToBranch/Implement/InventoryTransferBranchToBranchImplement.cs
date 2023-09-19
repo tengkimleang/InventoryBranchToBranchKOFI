@@ -115,7 +115,7 @@ namespace InventoryBranchToBranch.Implement
                     }
                     oCompany.EndTransaction(BoWfTransOpt.wf_Commit);
                     RetiveData rd = new RetiveData();
-                    rd.GetData("UpdateDocEntryToGoodIReceptAndUpdateDocEntryToGoodIssue", docEntryGoodReceipt, docEntryGoodIssue, "", "", "");
+                    rd.GetData("UpdateDocEntryToGoodIReceptAndUpdateDocEntryToGoodIssue", docEntryGoodReceipt, docEntryGoodIssue, data.ListItemList.FirstOrDefault().DocEntry, "", "");
                     return Task.FromResult(new ResponseInventoryTransferBranchToBranch
                     {
                         ErrorCode = 0,

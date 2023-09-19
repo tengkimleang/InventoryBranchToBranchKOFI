@@ -51,6 +51,7 @@ namespace InventoryBranchToBranch.Lib
                                 AccountCode = row[5].ToString(),
                                 SerialBatch = row[6].ToString(),
                                 ItemType = row[7].ToString(),
+                                DocEntry = row[9].ToString(),
                                 //WhsCode = row[6].ToString(),
                                 //BranchCode = row[7].ToString()
                             });

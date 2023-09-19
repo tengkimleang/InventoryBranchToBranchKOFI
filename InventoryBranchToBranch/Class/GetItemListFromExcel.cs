@@ -18,5 +18,6 @@ namespace InventoryBranchToBranch.Class
         public string ItemType { get; set; }
         //public string BranchCode { get; set; }
         public string ErrorMessage { get; set; }
+        public string DocEntry { get; set; }
     }
 }
